@@ -1,0 +1,123 @@
+.navigation {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    min-height: 26px;
+    display: grid;
+    grid-template-columns: 64px 54px;
+    column-gap: 14px;
+}
+
+@media screen and (min-width: 768px) {
+    .navigation {
+        grid-template-columns: 77px 76px;
+        column-gap: 30px;
+        min-height: 32px;
+    }
+}
+
+.novigation_place_movies {
+    display: block;
+}
+
+@media screen and (min-width: 1024px){
+    .novigation_place_movies {
+        display: flex;
+        width: 92.8075%;
+        justify-content: space-between;
+    }
+}
+
+.navigation__links {
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .navigation__links {
+        display: flex;
+        justify-content: space-between;
+        width: 200px;
+    }
+}
+
+.navigation__link {
+    color: white;
+    text-decoration: none;
+    font-size: 10px;
+    line-height: 26px;
+}
+
+.navigation__link:hover {
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    .navigation__link {
+        line-height: 32px;
+        font-size: 12px;
+    }
+}
+
+.navigation__link_type_login {
+    color: black;
+    background-color: #2BE080;
+}
+
+.navigation__link_type_movies {
+    line-height: 30px;
+    font-size: 13px;
+    color: black;
+}
+
+.navigation__link_type_save-movis {
+    line-height: 30px;
+    font-size: 13px;
+    color: black;
+}
+
+.navigation__link_type_profile {
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .navigation__link_type_profile {
+        display: block;
+        line-height: 30px;
+        font-size: 13px;
+        color: black;
+        text-align: start;
+        min-width: 80px;
+        background-image: url(../../images/icon-main.svg);
+        background-repeat: no-repeat;
+        background-position: right;
+    }
+}
+
+.navigatin__button {
+    margin: 0;
+    padding: 0;
+    min-width: 40px;
+    min-height: 43px;
+    background-color: white;
+    border: none;
+    background-image: url(../../images/burger.svg);
+    background-position: center;
+}
+
+.navigatin__button:hover {
+    outline: none;
+    opacity: 0.6;
+}
+
+@media screen and (min-width: 768px) {
+    .navigatin__button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    .navigatin__button {
+        display: none;
+    }
+}
