@@ -1,0 +1,69 @@
+.checkbox {
+    min-height: 109px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .checkbox {
+        width: 31.2%;
+        min-height: 72px;
+        background-color: #f9f9f9;
+        border-radius: 0 9px 9px 0;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .checkbox {
+        width: 17.281%;
+    }
+}
+
+.checkbox__text {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 18px;
+}
+
+@media screen and (min-width: 768px) {
+    .checkbox__text {
+        font-size: 13px;
+    }
+}
+
+.invisible-checkbox {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.invisible-checkbox:disabled + .visible-checkbox {
+    background-color: #3456F3;
+    background-position-x: 20%;
+}
+
+.invisible-checkbox:checked + .visible-checkbox {
+    background-color: #2BE080;
+    background-position-x: 80%;
+}
+
+.invisible-checkbox:hover + .visible-checkbox {
+    box-shadow: 0 0 10px grey;
+}
+
+.visible-checkbox {
+    width: 36px;
+    height: 20px;
+    margin-right: 13px;
+    background-color: #3456F3;
+    background-image: url(../../images/checkbox.svg);
+    background-repeat: no-repeat;
+    background-position-x: 20%;
+    background-position-y: 50%;
+    border-radius: 20px;
+}

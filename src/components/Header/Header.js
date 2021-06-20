@@ -1,0 +1,19 @@
+import './Header.css';
+import Logo from "../../images/logo.svg";
+import { Link, useLocation } from "react-router-dom";
+import Navigation from '../Navigation/Navigation';
+
+function Header({ isBurger, onBurger }) {
+    const location = useLocation();
+
+    return (
+        <section className={`header ${location.pathname === "/" && 'header_place_landing'}`}>
+            <Link to="/">
+              <img src={Logo} alt="логотип" className="header__logo" />
+            </Link>
+            <Navigation isBurger={isBurger} onBurger={onBurger} />
+        </section>
+    )
+}
+
+export default Header;

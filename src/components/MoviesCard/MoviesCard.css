@@ -1,0 +1,64 @@
+.movie {
+    border-radius: 10px;
+    box-shadow: 0 16px 24px rgb(0 0 0 / 5%);
+}
+
+.movie__image {
+    width: 100%;
+}
+
+.movie__rectangle {
+    min-height: 67px;
+    width: 88.1%;
+    margin: 0 auto;
+    text-align: start;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    display: grid;
+    grid-template-columns: 74.64% 16px;
+    grid-template-rows: 30px 27px;
+    column-gap: 54px;
+    row-gap: 10px;
+}
+
+.movie__title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 30px;
+}
+
+.movie__button {
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    background-color: #f9f9f9;
+    border-color: white;
+    box-shadow: 0px 3px 9px rgb(0 0 0 / 9%);
+    border-radius: 50%;
+    border-style: solid;
+}
+
+.movie__button:hover {
+    outline: none;
+    opacity: 0.6;
+}
+
+.movie__delete {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    background-image: url(../../images/delete.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+.movie__time {
+    margin: 0;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+    color: #a0a0a0;
+}

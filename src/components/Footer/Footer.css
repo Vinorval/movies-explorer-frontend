@@ -1,0 +1,121 @@
+.footer {
+    padding: 0 5.469%;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+    .footer {
+        padding: 0 3.907%;
+        min-height: 172px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .footer {
+        padding: 0 5.469%;
+    }
+}
+
+.footer__text {
+    width: 100%;
+    font-size: 13px;
+    line-height: 14.52px;
+    text-align: center;
+    color: #A0A0A0;
+    margin: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+@media screen and (min-width: 768px) {
+    .footer__text {
+        line-height: 15.73px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .footer__text {
+        line-height: 16px;
+    }
+}
+
+.footer__links {
+    display: flex;
+    min-height: 69px;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+@media screen and (min-width: 768px) {
+    .footer__links {
+        min-height: 15px;
+        flex-direction: row;
+        margin-bottom: 0;
+        width: 263px;
+    }
+}
+
+.footer__link {
+    font-size: 13px;
+    line-height: 14.52px;
+    margin: 0;
+}
+
+.footer__link:hover {
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    .footer__link {
+        line-height: 15.73px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .footer__link {
+        line-height: 16px;
+    }
+}
+
+.footer-block {
+    display: flex;
+    margin: 30px 0 10px 0;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .footer-block {
+        margin: 20px 0;
+        flex-direction: row;
+    }
+}
+
+.footer-block__year {
+    font-size: 13px;
+    line-height: 14.52px;
+    margin: 0;
+    color: #A0A0A0;
+}
+
+@media screen and (min-width: 768px) {
+    .footer-block__year {
+        line-height: 15.73px;
+        color: #000;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .footer-block__year {
+        line-height: 16px;
+    }
+}
