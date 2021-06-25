@@ -1,10 +1,12 @@
 import './Profile.css';
 import { Link } from "react-router-dom";
 import EditProfilePopup from '../EditProfilePopup/EditProfilePopup';
+import Header from '../Header/Header';
 
-function Profile({ onEditProfile, isOpen }) {
+function Profile({ onEditProfile, isOpen, isBurger, onBurger }) {
     return (
         <section className="profile section">
+            <Header isBurger={isBurger} onBurger={onBurger} />
             <h2 className="profile__title">Привет, Виталий!</h2>
             <div className="profile__info">
                 <p className="profile__name-info">Имя</p>

@@ -1,5 +1,5 @@
 .profile {
-    padding: 70px 0 40px;
+    padding: 0 0 40px;
     height: 76.411vh;
     font-family: Inter, Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -7,14 +7,14 @@
 
 @media screen and (min-width: 768px) {
     .profile {
-        padding: 236px 0 269px;
+        padding: 0 0 269px;
         height: 43.458vh;
     }
 }
 
 @media screen and (min-width: 1024px) {
     .profile {
-        padding: 74px 0 70px;
+        padding: 0 0 70px;
         height: 68.858vh;
     }
 }

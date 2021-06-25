@@ -1,7 +1,9 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import auth from '../../utils/auth';
 import Profile from '../Profile/Profile';
-import Header from '../Header/Header';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
@@ -15,6 +17,61 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isBurger, setIsBurger] = React.useState(false);
 
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [userEmail, setUserEmail] = React.useState("");
+
+  const history = useHistory();
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+    //выполняем запрос на сервер для проверки токена пользователя
+    React.useEffect(() => {
+      //взятие статуса токена из локального хранилища
+      const token = localStorage.getItem("token");
+      if (token) {
+        auth
+          .checkToken(token)
+          .then((res) => {
+            setUserEmail(res.email);
+            setLoggedIn(true);
+            //даём доступ к оснавной странице
+            history.push("/movies");
+            })
+          .catch((err) => {
+            alert(err);
+            localStorage.removeItem("token");
+          });
+      }
+    }, [history]);
+
+  //регестрируем нового пользователя
+  function registerUser(name, email, password) {
+    auth
+      .register(name, email, password)
+      .then(() => {
+        history.push("/signin");
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }
+
+    //выполняем вход пользователя
+    function enterUser(email, password) {
+      auth
+        .login(email, password)
+        .then((res) => {
+          if (res.token) {
+            setUserEmail(email);
+            localStorage.setItem("token", res.token);
+            setLoggedIn(true);
+            history.push("/movies");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+  }
+
   function handleEdittProfileClick() {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   }
@@ -27,26 +84,34 @@ function App() {
     <div className="App">
       <Switch>
       <Route exact path="/">
-        <Main />
+        <Main loggedIn={loggedIn} />
       </Route>
-      <Route path="/movies">
-        <Movies isBurger={isBurger} onBurger={handleBurger} />
-      </Route>
-      <Route path="/saved-movies">
-      <SavedMovies isBurger={isBurger} onBurger={handleBurger} />
-      </Route>
-      <Route path="/profile">
-      <Header isBurger={isBurger} onBurger={handleBurger} />
-      <Profile
-        onEditProfile={handleEdittProfileClick}
-        isOpen={isEditProfilePopupOpen}
+      <ProtectedRoute
+        path="/movies"
+        loggedIn={loggedIn}
+        component={Movies}
+        isBurger={isBurger}
+        onBurger={handleBurger}
       />
-      </Route>
+      <ProtectedRoute
+        path="/saved-movies"
+        loggedIn={loggedIn}
+        component={SavedMovies}
+        isBurger={isBurger}
+        onBurger={handleBurger} />
+      <ProtectedRoute
+        path="/profile"
+        loggedIn={loggedIn}
+        component={Profile}
+        isBurger={isBurger}
+        onBurger={handleBurger}
+        onEditProfile={handleEdittProfileClick}
+        isOpen={isEditProfilePopupOpen} />
       <Route path="/signin">
-        <Login />
+        <Login onLogin={enterUser} />
       </Route>
       <Route path="/signup">
-        <Register />
+        <Register onRegister={registerUser} />
       </Route>
       <Route path="*">
         <NotFound />
