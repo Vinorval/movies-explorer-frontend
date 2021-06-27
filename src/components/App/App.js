@@ -3,6 +3,7 @@ import './App.css';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import auth from '../../utils/auth';
+import mainApi from '../../utils/MainApi';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
@@ -18,7 +19,6 @@ function App() {
   const [isBurger, setIsBurger] = React.useState(false);
 
   const [currentUser, setCurrentUser] = React.useState({});
-  const [userEmail, setUserEmail] = React.useState("");
 
   const history = useHistory();
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -31,11 +31,15 @@ function App() {
         auth
           .checkToken(token)
           .then((res) => {
-            setUserEmail(res.email);
             setLoggedIn(true);
             //даём доступ к оснавной странице
             history.push("/movies");
-            })
+            //возвращаем данные пользователя из базы данных
+            mainApi.getProfileInfo(token).then((result) => {
+              //выполняем запись полученных данных в переменную состояния
+              setCurrentUser(result);
+            });
+          })
           .catch((err) => {
             alert(err);
             localStorage.removeItem("token");
@@ -48,7 +52,7 @@ function App() {
     auth
       .register(name, email, password)
       .then(() => {
-        history.push("/signin");
+        enterUser(email, password);
       })
       .catch((err) => {
         console.log(err)
@@ -61,15 +65,39 @@ function App() {
         .login(email, password)
         .then((res) => {
           if (res.token) {
-            setUserEmail(email);
             localStorage.setItem("token", res.token);
             setLoggedIn(true);
             history.push("/movies");
+            mainApi.getProfileInfo(res.token).then((result) => {
+              //выполняем запись полученных данных в переменную состояния
+              setCurrentUser(result);
+              });
           }
         })
         .catch((err) => {
           alert(err);
         });
+  }
+
+  //выполняем выход пользователя с удалением токена из локального хранилища
+  function signOut() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+  }
+
+  function handleUpdateUser(data) {
+    const token = localStorage.getItem("token");
+    //выполняем запрос на сервер для отпраки новой информации о пользователе
+    mainApi
+      .putProfileInfo(data, token)
+      .then((result) => {
+        //выполняем запись полученных данных в переменную состояния
+        setCurrentUser(result);
+        setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
   function handleEdittProfileClick() {
@@ -82,6 +110,7 @@ function App() {
 
   return (
     <div className="App">
+      <CurrentUserContext.Provider value={currentUser}>
       <Switch>
       <Route exact path="/">
         <Main loggedIn={loggedIn} />
@@ -106,7 +135,9 @@ function App() {
         isBurger={isBurger}
         onBurger={handleBurger}
         onEditProfile={handleEdittProfileClick}
-        isOpen={isEditProfilePopupOpen} />
+        onUpdateUser={handleUpdateUser}
+        isOpen={isEditProfilePopupOpen}
+        signOut={signOut} />
       <Route path="/signin">
         <Login onLogin={enterUser} />
       </Route>
@@ -117,6 +148,7 @@ function App() {
         <NotFound />
       </Route>
       </Switch>
+      </CurrentUserContext.Provider>
     </div>
   );
 }
