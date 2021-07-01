@@ -8,7 +8,6 @@ function MoviesCardList({ movies, saveMovie, onDelete }) {
     const [startCard, setSartCard] = React.useState(0);
     const movieCards = movies.slice(0,startCard);
     const movieCheckPath = location.pathname === "/movies" ? movieCards : movies
-    console.log(movies)
 
     function showsnumberList() {
       if( window.innerWidth < 768 ) {

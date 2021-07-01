@@ -8,9 +8,6 @@ function SavedMovies({ isBurger, onBurger, movies, onDelete }) {
     const [iskeyword, setIsKeyword] = React.useState('');
     const [isShort, setIsShort] = React.useState(false);
     const [isNewArr, setNewArr] = React.useState(movies);
-    
-    console.log(movies)
-    console.log(isNewArr);
 
     function handleCheckbox(boolean) {
         setIsShort(boolean)

@@ -86,7 +86,7 @@ class MainApi {
   
   //запись всего класса Api в переменную и её импорт
   const mainApi = new MainApi({
-    url: "http://localhost:3005",
+    url: "https://api.vinorval.movies.nomoredomains.icu",
     headers: {
       "content-type": "application/json",
     },

@@ -7,19 +7,13 @@ function MoviesCard(props) {
     const [isbuttonLike, setButtonLike] = React.useState(false);
     const hour = Math.floor(props.time / 60);
     const minutes = props.time % 60;
-    console.log(props.item);
-    console.log(props.trailer)
 
     function putOderDeleteLike() {
       //props.setIsPreloader(true)
       if(!isbuttonLike) {
-        console.log(true)
-        console.log(props.item.id)
 
         props.saveMovie(props.item)
       } else {
-        console.log(false)
-
         props.onDelete(props.id)
       }
       return setButtonLike(!isbuttonLike)

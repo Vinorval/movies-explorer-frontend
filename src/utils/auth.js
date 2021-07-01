@@ -44,7 +44,7 @@ class Auth {
 }
 
 const auth = new Auth({
-  url: "http://localhost:3005",
+  url: "https://api.vinorval.movies.nomoredomains.icu",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

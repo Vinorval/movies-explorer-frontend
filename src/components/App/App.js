@@ -137,7 +137,6 @@ function App() {
       });
       //выполняем запись этого массива в переменную состояния
       setMoviesSavied(items);
-      console.log(moviesSaved)
     })
     .catch((err) => {
       console.log(err)

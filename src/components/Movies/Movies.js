@@ -10,7 +10,6 @@ function Movies({ isBurger, onBurger, movies, saveMovie, onDelete }) {
     const [isShort, setIsShort] = React.useState(false);
     const [isNewArr, setNewArr] = React.useState([]);
     const [isTextSearch, setIsTextSearch] = React.useState(true);
-    console.log(isNewArr);
 
     function handleCheckbox(boolean) {
         setIsShort(boolean)
