@@ -83,3 +83,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
           Learn React
         </a>
       </header>
+
+
+movie.nameRU.toLowerCase().includes(keyword.toLowerCase())

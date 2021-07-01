@@ -1,31 +1,23 @@
 import React from "react";
 import './Register.css';
 import Form from '../Form/Form';
+import useFormWithValidation from "../../utils/useFormWithValidation";
 
 function Register({ onRegister }) {
 
     //создание переменных состояния, отвечающие за инпуты
-    const [name, setName] = React.useState("")
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-
-    function handleChangeName(e) {
-        setName(e.target.value);
-      }
-
-    function handleChangeEmail(e) {
-      setEmail(e.target.value);
-    }
-
-    function handleChangePassword(e) {
-      setPassword(e.target.value);
-    }
+    const [isRegistrationError, setIsRegistrationError] = React.useState('');
+    const [formDisablet, setFormDisablet] = React.useState(false);
+    const [values, handleChange, errors, isValid] = useFormWithValidation();
 
     function handleSubmit(evt) {
       evt.preventDefault();
 
+      setFormDisablet(true);
+      setIsRegistrationError(false);
+
       //отправка данных с инпутов в функцию с запросом на сервер для регистрации
-      onRegister( name, email, password );
+      onRegister( values.name, values.email, values.password )
     }
 
     return (
@@ -39,11 +31,20 @@ function Register({ onRegister }) {
               text='Уже зарегистрированы?'
               textLink='Войти'
               link='/signin'
-              span='Что-то пошло не так...'
-              changeFirstInput={handleChangeName}
-              changeSecondInput={handleChangeEmail}
-              changeThirdInput={handleChangePassword}
+              spanFirstInput={errors.name}
+              spanSecondInput={errors.email}
+              spanThirdInput={errors.password}
+              changeFirstInput={handleChange}
+              changeSecondInput={handleChange}
+              changeThirdInput={handleChange}
+              nameFirstInput='name'
+              nameSecondInput='email'
+              nameThirdInput='password'
+              typeSecondInput='email'
               submit={handleSubmit}
+              isValid={isValid}
+              isRegistrationError={isRegistrationError}
+              formDisablet={formDisablet}
             />
         </section>
     )

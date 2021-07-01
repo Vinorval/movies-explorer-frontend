@@ -4,6 +4,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import auth from '../../utils/auth';
 import mainApi from '../../utils/MainApi';
+import moviesApi from "../../utils/MoviesApi";
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
@@ -12,11 +13,15 @@ import React from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isBurger, setIsBurger] = React.useState(false);
+  const [isPreloader, setIsPreloader] = React.useState(false);
+  const [movies, setMovies] = React.useState([]);
+  const [moviesSaved, setMoviesSavied] = React.useState([]);
 
   const [currentUser, setCurrentUser] = React.useState({});
 
@@ -33,11 +38,13 @@ function App() {
           .then((res) => {
             setLoggedIn(true);
             //даём доступ к оснавной странице
-            history.push("/movies");
+            history.push("/movies" || "/saved-movies"  || "/profile");
             //возвращаем данные пользователя из базы данных
-            mainApi.getProfileInfo(token).then((result) => {
+            mainApi.getProfileInfo(token)
+            .then((result) => {
               //выполняем запись полученных данных в переменную состояния
               setCurrentUser(result);
+              showSavedMovies()
             });
           })
           .catch((err) => {
@@ -45,6 +52,15 @@ function App() {
             localStorage.removeItem("token");
           });
       }
+      moviesApi
+        .getAllMovies()
+        .then((data) => {
+          setMovies(data);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+      
     }, [history]);
 
   //регестрируем нового пользователя
@@ -100,6 +116,69 @@ function App() {
       });
   }
 
+  function showSavedMovies() {
+    setIsPreloader(true);
+    const token = localStorage.getItem("token");
+    //показываем все карточки из базы данных
+    mainApi
+    .getAllCard(token)
+    .then((res) => {
+      const items = res.map((item) => {
+      return {
+        //возвращаем массив с нужными данными для создания начальных карточек
+        key: item._id,
+        id: item.movieId,
+        image: item.image,
+        nameRU: item.nameRU,
+        duration: item.duration,
+        owner: item.owner,
+        trailer: item.trailer
+      };
+      });
+      //выполняем запись этого массива в переменную состояния
+      setMoviesSavied(items);
+      console.log(moviesSaved)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally(() => setIsPreloader(false))
+  }
+
+  function handleSaveMovies(card) {
+    const token = localStorage.getItem("token");
+    setIsPreloader(true);
+    // Отправляем запрос в API и создаём карточку
+    mainApi
+    .addCard(card, token)
+    .then((newCard) => {
+      setMoviesSavied([newCard, ...moviesSaved]);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => setIsPreloader(false))
+  }
+
+  function handleCardDelete(_id) {
+    const token = localStorage.getItem("token");
+    setIsPreloader(true);
+    // Отправляем запрос в API и удаляем карточку
+    mainApi
+      .removeCard(_id, token)
+      .then((res) => {
+        const index = moviesSaved.map((el) => el.id).indexOf(_id)
+        if(index > -1) {
+          moviesSaved.splice(index, 1);
+          setMoviesSavied([...moviesSaved])
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      })
+      .finally(() => setIsPreloader(false))
+  }
+
   function handleEdittProfileClick() {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   }
@@ -111,6 +190,7 @@ function App() {
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
+      <Preloader visible={isPreloader}/>
       <Switch>
       <Route exact path="/">
         <Main loggedIn={loggedIn} />
@@ -121,13 +201,19 @@ function App() {
         component={Movies}
         isBurger={isBurger}
         onBurger={handleBurger}
+        movies={movies}
+        saveMovie={handleSaveMovies}
+        onDelete={handleCardDelete}
       />
       <ProtectedRoute
         path="/saved-movies"
         loggedIn={loggedIn}
         component={SavedMovies}
         isBurger={isBurger}
-        onBurger={handleBurger} />
+        onBurger={handleBurger}
+        movies={moviesSaved}
+        onDelete={handleCardDelete}
+      />
       <ProtectedRoute
         path="/profile"
         loggedIn={loggedIn}

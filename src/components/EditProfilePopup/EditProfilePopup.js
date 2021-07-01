@@ -2,38 +2,24 @@ import React from "react";
 import './EditProfilePopup.css';
 import Form from '../Form/Form';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import useFormWithValidation from "../../utils/useFormWithValidation";
 
 function EditProfilePopup({ isOpen, onCloseButton, onUpdateUser }) {
-    //создание переменных состояния для хранения имени и информации о пользователе
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
     //создание контекста о пользователе
     const currentUser = React.useContext(CurrentUserContext);
-
-    //изменение имени, в зависимости от значения инпута
-    function handleChangeName(event) {
-      setName(event.target.value);
-    }
-
-    //изменение информации о пользователе, в зависимости от значения инпута
-    function handleChangeEmail(event) {
-      setEmail(event.target.value);
-    }
-
-    React.useEffect(() => {
-      // запись имени и информации о пользователе из контекста
-      setName(currentUser.name);
-      setEmail(currentUser.email);
-    }, [currentUser]);
+    const [formDisablet, setFormDisablet] = React.useState(false);
+    const [values, handleChange, errors, isValid] = useFormWithValidation({ name: currentUser.name, email: currentUser.email});
 
     //события при сохранении новой информации о пользователе
     function handleSubmit(e) {
       e.preventDefault();
 
+      setFormDisablet(true);
+
       // Передаём значения управляемых компонентов во внешний обработчик
       onUpdateUser({
-        name,
-        email,
+        name: values.name,
+        email: values.email,
       });
     }
 
@@ -49,11 +35,18 @@ function EditProfilePopup({ isOpen, onCloseButton, onUpdateUser }) {
               text='Передумали?'
               textLink='K фильмам'
               link='/movies'
-              changeFirstInput={handleChangeName}
-              changeSecondInput={handleChangeEmail}
+              spanFirstInput={errors.name}
+              spanSecondInput={errors.email}
+              changeFirstInput={handleChange}
+              changeSecondInput={handleChange}
+              nameFirstInput='name'
+              nameSecondInput='email'
+              typeSecondInput='email'
               submit={handleSubmit}
-              valueFirstInput={name || ''}
-              valueSecondInput={email || ''}
+              valueFirstInput={values.name || ''}
+              valueSecondInput={values.email || ''}
+              isValid={isValid}
+              formDisablet={formDisablet}
             />
             </div>
         </section>

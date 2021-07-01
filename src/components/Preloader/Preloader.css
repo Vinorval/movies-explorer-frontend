@@ -86,3 +86,13 @@
     background: #2BE080;
     animation: preloader-inside-red 1s ease-in-out infinite;
 }
+
+.invisible {
+    display: none;
+}
+
+.visible {
+    position: fixed;
+    top: 0;
+    left: 0;
+}

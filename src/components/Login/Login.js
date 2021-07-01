@@ -1,25 +1,22 @@
 import React from "react";
 import './Login.css';
 import Form from '../Form/Form';
+import useFormWithValidation from "../../utils/useFormWithValidation";
 
 function Login({ onLogin }) {
     //создание переменных состояния, отвечающие за инпуты
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-
-    function handleChangeEmail(e) {
-      setEmail(e.target.value);
-    }
-
-    function handleChangePassword(e) {
-      setPassword(e.target.value);
-    }
+    const [isRegistrationError, setIsRegistrationError] = React.useState('');
+    const [formDisablet, setFormDisablet] = React.useState(false);
+    const [values, handleChange, errors, isValid] = useFormWithValidation();
 
     function handleSubmit(evt) {
       evt.preventDefault();
 
+      setFormDisablet(true);
+      setIsRegistrationError(false);
+
       //отправка данных с инпутов в функцию с запросом на сервер для регистрации
-      onLogin(email, password);
+      onLogin(values.email, values.password);
     }
 
     return (
@@ -32,9 +29,17 @@ function Login({ onLogin }) {
               text='Ещё не зарегистрированы?'
               textLink='Регистрация'
               link='/signup'
-              changeFirstInput={handleChangeEmail}
-              changeSecondInput={handleChangePassword}
+              spanFirstInput={errors.email}
+              spanSecondInput={errors.password}
+              changeFirstInput={handleChange}
+              changeSecondInput={handleChange}
+              nameFirstInput='email'
+              nameSecondInput='password'
+              typeSecondInput='password'
               submit={handleSubmit}
+              isValid={isValid}
+              isRegistrationError={isRegistrationError}
+              formDisablet={formDisablet}
             />
         </section>
     )

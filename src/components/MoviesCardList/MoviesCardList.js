@@ -2,12 +2,13 @@ import React from "react";
 import './MoviesCardList.css';
 import { useLocation } from "react-router-dom";
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { movies } from '../../utils/utils';
 
-function MoviesCardList() {
+function MoviesCardList({ movies, saveMovie, onDelete }) {
     const location = useLocation();
     const [startCard, setSartCard] = React.useState(0);
     const movieCards = movies.slice(0,startCard);
+    const movieCheckPath = location.pathname === "/movies" ? movieCards : movies
+    console.log(movies)
 
     function showsnumberList() {
       if( window.innerWidth < 768 ) {
@@ -44,18 +45,24 @@ function MoviesCardList() {
     return (
         <section className="movies">
         <ul className="movies-list">
-          {movieCards.map((item) => (
+          {movieCheckPath.map((item) => (
           <MoviesCard
-            key={item._id}
-            image={item.image}
-            name={item.name}
-            time={item.time}
+            key={item.id}
+            id={item.id}
+            image={location.pathname === "/movies" ? `https://api.nomoreparties.co${item.image.url}` : item.image}
+            name={item.nameRU}
+            time={item.duration}
+            trailer={location.pathname === "/movies" ? item.trailerLink : item.trailer}
+            item={item}
+            saveMovie={saveMovie}
+            onDelete={onDelete}
           />
         ))}
         </ul>
         <button type="button" onClick={handleMore} className={`
-        ${location.pathname === "/movies" ? "movies-list__button" : "movies-list__button-none"}
-        ${hideButton() ? "movies-list__button-none" : ""}`}>Ещё</button>
+          ${location.pathname === "/movies" ? "movies-list__button" : "movies-list__button-none"}
+          ${hideButton() ? "movies-list__button-none" : ""}
+        `}>Ещё</button>
         </section>
     )
 }
