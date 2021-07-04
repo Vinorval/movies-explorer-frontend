@@ -65,6 +65,7 @@ function App() {
 
   //регестрируем нового пользователя
   function registerUser(name, email, password) {
+    setIsPreloader(true);
     auth
       .register(name, email, password)
       .then(() => {
@@ -72,11 +73,13 @@ function App() {
       })
       .catch((err) => {
         console.log(err)
-      });
+      })
+      .finally(() => setIsPreloader(false))
   }
 
     //выполняем вход пользователя
     function enterUser(email, password) {
+      setIsPreloader(true);
       auth
         .login(email, password)
         .then((res) => {
@@ -92,7 +95,8 @@ function App() {
         })
         .catch((err) => {
           alert(err);
-        });
+        })
+        .finally(() => setIsPreloader(false))
   }
 
   //выполняем выход пользователя с удалением токена из локального хранилища
@@ -102,6 +106,7 @@ function App() {
   }
 
   function handleUpdateUser(data) {
+    setIsPreloader(true);
     const token = localStorage.getItem("token");
     //выполняем запрос на сервер для отпраки новой информации о пользователе
     mainApi
@@ -113,7 +118,8 @@ function App() {
       })
       .catch((err) => {
         alert(err);
-      });
+      })
+      .finally(() => setIsPreloader(false))
   }
 
   function showSavedMovies() {
@@ -196,6 +202,8 @@ function App() {
       </Route>
       <ProtectedRoute
         path="/movies"
+        isPreloader={isPreloader}
+        setIsPreloader={setIsPreloader}
         loggedIn={loggedIn}
         component={Movies}
         isBurger={isBurger}

@@ -8,6 +8,7 @@ function SavedMovies({ isBurger, onBurger, movies, onDelete }) {
     const [iskeyword, setIsKeyword] = React.useState('');
     const [isShort, setIsShort] = React.useState(false);
     const [isNewArr, setNewArr] = React.useState(movies);
+    const [searchSuccessful, setSearchSuccessful] = React.useState(false);
 
     function handleCheckbox(boolean) {
         setIsShort(boolean)
@@ -35,10 +36,23 @@ function SavedMovies({ isBurger, onBurger, movies, onDelete }) {
         })
     }
 
+    function handleSubmit() {
+        const arrMovies = handleButton();
+
+        if( arrMovies.length === 0 ) {
+            setSearchSuccessful(true);
+        } else {
+            setSearchSuccessful(false);
+        }
+
+        return arrMovies
+    }
+
     return(
         <section>
             <Header isBurger={isBurger} onBurger={onBurger} />
-            <SearchForm iskeyword={handleKeyword} checkbox={handleCheckbox} submit={handleButton} newArr={writeNewArr} />
+            <SearchForm keyword={iskeyword} iskeyword={handleKeyword} checkbox={handleCheckbox} submit={handleSubmit} newArr={writeNewArr} />
+            <p className={`${!searchSuccessful && 'invisable'}`}>Ничего не найдено</p>
             <MoviesCardList movies={isNewArr} onDelete={onDelete} />
             <Footer />
         </section>
