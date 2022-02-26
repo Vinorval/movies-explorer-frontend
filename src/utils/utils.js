@@ -15,7 +15,7 @@ import photo14 from '../images/14.jpg';
 import photo15 from '../images/15.jpg';
 import photo16 from '../images/16.jpg';
 
-export const movies = [
+export const moviess = [
     {
         _id: '1',
         image: photo1,

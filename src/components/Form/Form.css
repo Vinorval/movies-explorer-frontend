@@ -162,6 +162,10 @@
     color: white;
 }
 
+.form__button_disablet {
+    opacity: 0.6;
+}
+
 .form__button:hover {
     outline: none;
     opacity: 0.6;
