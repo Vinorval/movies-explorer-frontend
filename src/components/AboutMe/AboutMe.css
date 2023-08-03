@@ -2,6 +2,7 @@
     padding: 70px 5.625%;
     font-family: Inter, Arial, Helvetica, sans-serif;
     font-style: normal;
+    font-weight: normal;
 }
 
 @media screen and (min-width: 768px) {
@@ -17,7 +18,6 @@
 }
 
 .aboutMe__title {
-    font-weight: normal;
     font-size: 18px;
     line-height: 21.78px;
     text-align: start;
@@ -85,7 +85,6 @@
 
 .aboutMe__name {
     margin: 0;
-    font-weight: normal;
     font-size: 30px;
     line-height: 36px;
 }
@@ -127,7 +126,6 @@
 
 .aboutMe__text {
     margin: 0;
-    font-weight: normal;
     font-size: 11px;
     line-height: 16px;
 }

@@ -2,6 +2,7 @@
     padding: 70px 5.625%;
     font-family: Inter, Arial, Helvetica, sans-serif;
     font-style: normal;
+    font-weight: normal;
 }
 
 @media screen and (min-width: 768px) {
@@ -18,7 +19,6 @@
 }
 
 .tech__title {
-    font-weight: normal;
     font-size: 18px;
     line-height: 21.78px;
     text-align: start;
@@ -42,7 +42,6 @@
 }
 
 .tech__subtitle {
-    font-weight: normal;
     font-size: 30px;
     line-height: 36.31px;
     margin: 60px auto 0;
@@ -64,7 +63,6 @@
 }
 
 .tech__text {
-    font-weight: normal;
     font-size: 11px;
     line-height: 16px;
     margin: 24px auto 50px;
