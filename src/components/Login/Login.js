@@ -8,6 +8,8 @@ function Login({ onLogin }) {
     const [isRegistrationError, setIsRegistrationError] = React.useState('');
     const [formDisablet, setFormDisablet] = React.useState(false);
     const [values, handleChange, errors, isValid] = useFormWithValidation();
+    const secondInput = { title: 'Пароль', span: errors.password, name: "password", change: handleChange, type: 'password' };
+    const firstInput = { title: 'E-mail', span: errors.email, name: "email", change: handleChange };
 
     function handleSubmit(evt) {
       evt.preventDefault();
@@ -23,19 +25,12 @@ function Login({ onLogin }) {
         <section className="login">
             <Form
               title='Рады видеть!'
-              firstInput='E-mail'
-              secondInput='Пароль'
+              firstInput={firstInput}
+              secondInput={secondInput}
               button='Войти'
               text='Ещё не зарегистрированы?'
               textLink='Регистрация'
               link='/signup'
-              spanFirstInput={errors.email}
-              spanSecondInput={errors.password}
-              changeFirstInput={handleChange}
-              changeSecondInput={handleChange}
-              nameFirstInput='email'
-              nameSecondInput='password'
-              typeSecondInput='password'
               submit={handleSubmit}
               isValid={isValid}
               isRegistrationError={isRegistrationError}

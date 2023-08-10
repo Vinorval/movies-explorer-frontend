@@ -9,6 +9,8 @@ function EditProfilePopup({ isOpen, onCloseButton, onUpdateUser }) {
     const currentUser = React.useContext(CurrentUserContext);
     const [formDisablet, setFormDisablet] = React.useState(false);
     const [values, handleChange, errors, isValid] = useFormWithValidation({ name: currentUser.name, email: currentUser.email});
+    const firstInput = { title: "Имя", span: errors.name, name: "name", value: values.name || '', change: handleChange };
+    const secondInput = { title: 'E-mail', span: errors.email, name: "email", type: 'email', value: values.email || '', change: handleChange };
 
     //события при сохранении новой информации о пользователе
     function handleSubmit(e) {
@@ -29,22 +31,13 @@ function EditProfilePopup({ isOpen, onCloseButton, onUpdateUser }) {
             <button type="button" className="popup-profile__button" onClick={onCloseButton}></button>
             <Form
               title='Редактировать'
-              firstInput='Имя'
-              secondInput='E-mail'
+              firstInput = {firstInput} 
+              secondInput={secondInput}
               button='Сохранить'
               text='Передумали?'
               textLink='K фильмам'
               link='/movies'
-              spanFirstInput={errors.name}
-              spanSecondInput={errors.email}
-              changeFirstInput={handleChange}
-              changeSecondInput={handleChange}
-              nameFirstInput='name'
-              nameSecondInput='email'
-              typeSecondInput='email'
               submit={handleSubmit}
-              valueFirstInput={values.name || ''}
-              valueSecondInput={values.email || ''}
               isValid={isValid}
               formDisablet={formDisablet}
             />

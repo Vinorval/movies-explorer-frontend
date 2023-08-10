@@ -11,21 +11,8 @@ function Form({
     text,
     textLink,
     link,
-    spanFirstInput,
-    spanSecondInput,
-    spanThirdInput,
-    changeFirstInput,
-    changeSecondInput,
-    changeThirdInput,
-    nameFirstInput,
-    nameSecondInput,
-    nameThirdInput,
     submit,
-    valueFirstInput,
-    valueSecondInput,
-    typeSecondInput,
     isValid,
-    isRegistrationError,
     formDisablet
 }) {
     const location = useLocation();
@@ -40,40 +27,40 @@ function Form({
             </div>
             <div className={`form__labels-block ${location.pathname === '/profile' && 'form__labels-block_place_profile'}`}>
                 <label className="form__label">
-                    <h3 className="form__name-input">{firstInput}</h3>
+                    <h3 className="form__name-input">{firstInput.title}</h3>
                     <input
-                      name={nameFirstInput}
+                      name={firstInput.name}
                       type="text"
-                      className={`form__input ${spanFirstInput && 'form__input-error'}`}
-                      onChange={changeFirstInput}
-                      value={valueFirstInput}
+                      className={`form__input ${firstInput.span && 'form__input-error'}`}
+                      onChange={firstInput.chahge}
+                      value={firstInput.value}
                       minLength={2}
                       required />
-                    <span className="form__span">{spanFirstInput}</span>
+                    <span className="form__span">{firstInput.span}</span>
                 </label>
                 <label className="form__label">
-                    <h3 className="form__name-input">{secondInput}</h3>
+                    <h3 className="form__name-input">{secondInput.title}</h3>
                     <input
-                      name={nameSecondInput}
-                      type={typeSecondInput}
-                      className={`form__input ${spanSecondInput && 'form__input-error'}`}
-                      onChange={changeSecondInput}
-                      value={valueSecondInput}
+                      name={secondInput.name}
+                      type={secondInput.type}
+                      className={`form__input ${secondInput.span && 'form__input-error'}`}
+                      onChange={secondInput.change}
+                      value={secondInput.value}
                       minLength={4}
                       required />
-                    <span className="form__span">{spanSecondInput}</span>
+                    <span className="form__span">{secondInput.span}</span>
                 </label>
                 {location.pathname === '/signup' && (
                     <label className="form__label">
-                       <h3 className="form__name-input">{thirdInput}</h3>
+                       <h3 className="form__name-input">{thirdInput.title}</h3>
                        <input
-                         name={nameThirdInput}
+                         name={thirdInput.name}
                          type="password"
-                         className={`form__input ${spanThirdInput && 'form__input-error'}`}
-                         onChange={changeThirdInput}
+                         className={`form__input ${thirdInput.span && 'form__input-error'}`}
+                         onChange={thirdInput.change}
                          minLength={4}
                          required />
-                       <span className="form__span">{spanThirdInput}</span>
+                       <span className="form__span">{thirdInput.span}</span>
                     </label>
                 )}
             </div>
